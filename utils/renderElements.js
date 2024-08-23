@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function renderElement(json) {
+export default function renderElements(json) {
   if (typeof json === 'string') {
     return json;
   }
@@ -11,7 +11,7 @@ export default function renderElement(json) {
   // Use a more stable key based on the content
   const childrenElements = (children || []).map((child) => (
     <React.Fragment key={getStableKey(child)}>
-      {renderElement(child)}
+      {renderElements(child)}
     </React.Fragment>
   ));
 

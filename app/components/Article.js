@@ -1,11 +1,11 @@
 'use client';
 
-import renderElement from '@/utils/renderElement';
+import renderElements from '@/utils/renderElements';
 
 export default function Article({ jsonData }) {
   return (
     <div className="flex justify-center py-8">
-      <article className="prose">{renderElement(jsonData)}</article>
+      <article className="prose">{renderElements(jsonData)}</article>
     </div>
   );
 }

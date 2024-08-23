@@ -21,8 +21,8 @@ export default function renderElements(json) {
   }
 
   // Use a more stable key based on the content
-  const childrenElements = (children || []).map((child) => (
-    <React.Fragment key={getStableKey(child)}>
+  const childrenElements = (children || []).map((child, index) => (
+    <React.Fragment key={getStableKey(child, index)}>
       {renderElements(child)}
     </React.Fragment>
   ));
@@ -42,11 +42,14 @@ export default function renderElements(json) {
 }
 
 // Helper function to generate a stable key
-function getStableKey(child) {
+function getStableKey(child, index) {
   if (typeof child === 'string') {
     return child;
   }
-  return `${child.type}-${JSON.stringify(child.attributes)}`;
+  const attributesString = child.attributes
+    ? JSON.stringify(child.attributes)
+    : `no-attributes-${index}`;
+  return `${child.type}-${attributesString}`;
 }
 
 // Dynamic element component

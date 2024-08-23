@@ -5,30 +5,51 @@ import TextArea from './TextArea';
 import Button from './Button';
 
 export default function Form() {
-  const [text, setText] = useState('');
+  const [instructions, setInstructions] = useState('');
+  const [result, setResult] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
-  const handleTextChange = (e) => {
-    setText(e.target.value);
-  };
-
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Here you can add the logic to handle the form submission
-    console.log('Submitted text:', text);
-    // Reset the form after submission
-    setText('');
+    setIsLoading(true);
+    try {
+      const response = await fetch('/api/rewrite', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ instructions }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to rewrite article');
+      }
+
+      const data = await response.json();
+      setResult(data.rewrittenArticle);
+    } catch (error) {
+      console.error('Error:', error);
+      // Handle error (e.g., show error message to user)
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
     <form onSubmit={handleSubmit} className="flex flex-col items-center w-full">
       <TextArea
         placeholder="Fortell hva som må forbedres med artikkelen..."
-        value={text}
-        onChange={handleTextChange}
+        value={instructions}
+        onChange={(e) => setInstructions(e.target.value)}
       />
       <div className="mt-4">
-        <Button text="Forbedre" />
+        <Button
+          text={isLoading ? 'Forbedrer...' : 'Forbedre'}
+          type="submit"
+          disabled={isLoading}
+        />
       </div>
+      {result && <div dangerouslySetInnerHTML={{ __html: result }} />}
     </form>
   );
 }

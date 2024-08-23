@@ -1,13 +1,10 @@
-import Article from './components/Article';
-import content from '@/data/content';
-import Form from './components/Form';
+import ArticleRewriter from './components/ArticleRewriter';
 
 export default function Home() {
   return (
-    <div className="flex flex-col items-center py-8">
-      <Form />
-      <div className="mt-4">
-        <Article data={content} />
+    <div className="flex flex-col items-center py-8 w-full">
+      <div className="prose ">
+        <ArticleRewriter />
       </div>
     </div>
   );

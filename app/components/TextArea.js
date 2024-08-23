@@ -1,6 +1,6 @@
 'use client';
 
-export default function TextArea({ prompt, value, onChange }) {
+export default function TextArea({ value, onChange, placeholder }) {
   return (
     <div className="w-full max-w-md">
       <textarea
@@ -9,7 +9,7 @@ export default function TextArea({ prompt, value, onChange }) {
         rows="4"
         value={value}
         onChange={onChange}
-        placeholder="Fortell hva som må forbedres med artikkelen..."
+        placeholder={placeholder}
       />
     </div>
   );

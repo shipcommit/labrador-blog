@@ -1,10 +1,12 @@
 import OpenAI from 'openai';
 
-const client = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-});
+console.log(process.env);
 
-export default async function rewrite(instructions) {
+const apiKey = process.env.OPENAI_API_KEY;
+
+const client = new OpenAI({ apiKey });
+
+export default async function rewriteArticle(instructions) {
   const modelRequest = await client.chat.completions.create({
     messages: [
       {

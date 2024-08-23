@@ -1,8 +1,14 @@
-import OpenAI from 'openai';
+// import OpenAI from 'openai';
 
-const apiKey = process.env.OPENAI_API_KEY;
+// const apiKey = process.env.OPENAI_API_KEY;
 
-const client = new OpenAI({ apiKey });
+// const client = new OpenAI({ apiKey });
+
+import Anthropic from '@anthropic-ai/sdk';
+
+const client = new Anthropic({
+  apiKey: process.env.ANTHROPIC_API_KEY,
+});
 
 export default async function rewriteArticle(instructions, article) {
   try {
@@ -13,24 +19,48 @@ export default async function rewriteArticle(instructions, article) {
       };
     }
 
-    console.log('instructions:', instructions);
+    // console.log('instructions:', instructions);
 
-    const modelRequest = await client.chat.completions.create({
+    // const modelRequest = await client.chat.completions.create({
+    //   messages: [
+    //     {
+    //       role: 'user',
+    //       content: `Improve this Norwegian article and return the HTML based on these instructions: ${instructions}`,
+    //     },
+    //     {
+    //       role: 'user',
+    //       content: `Article:
+    //       ${article}`,
+    //     },
+    //   ],
+    //   model: 'gpt-3.5-turbo',
+    // });
+
+    // return modelRequest.choices[0].message.content;
+
+    console.log('Improving article...');
+
+    const modelRequest = await client.messages.create({
+      max_tokens: 2048,
       messages: [
         {
           role: 'user',
           content: `Improve this Norwegian article and return the HTML based on these instructions: ${instructions}`,
         },
         {
+          role: 'assistant',
+          content: 'No problem, please provide the article',
+        },
+        {
           role: 'user',
           content: `Article:
-          ${article}`,
+              ${article}`,
         },
       ],
-      model: 'gpt-3.5-turbo',
+      model: 'claude-3-opus-20240229',
     });
 
-    return modelRequest.choices[0].message.content;
+    return modelRequest.content[0].text;
   } catch (err) {
     console.error('Error rewriting article:', err);
     throw err;

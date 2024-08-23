@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function renderElements(json) {
+export default function renderElements(json, parentType = null) {
   if (typeof json === 'string') {
     return json;
   }
@@ -23,13 +23,25 @@ export default function renderElements(json) {
   // Use a more stable key based on the content
   const childrenElements = (children || []).map((child, index) => (
     <React.Fragment key={getStableKey(child, index)}>
-      {renderElements(child)}
+      {renderElements(child, type)}
     </React.Fragment>
   ));
 
   // Ensure <head> is not a child of invalid elements
-  if (type.toLowerCase() === 'head' && !['html'].includes(json.parentType)) {
-    console.warn('<head> cannot be a child of <' + json.parentType + '>');
+  if (type.toLowerCase() === 'head' && !['html'].includes(parentType)) {
+    console.warn('<head> cannot be a child of <' + parentType + '>');
+    return null;
+  }
+
+  // Add check to prevent <head> as a child of <article>
+  if (
+    type.toLowerCase() === 'head' &&
+    parentType &&
+    parentType.toLowerCase() === 'article'
+  ) {
+    console.warn(
+      '<head> cannot be a child of <article>. This will cause a hydration error.'
+    );
     return null;
   }
 

@@ -4,7 +4,16 @@ const client = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
 
-const modelRequest = await client.chat.completions.create({
-  messages: [{ role: 'user', content: 'Say this is a test' }],
-  model: 'gpt-3.5-turbo',
-});
+export default async function rewrite(instructions) {
+  const modelRequest = await client.chat.completions.create({
+    messages: [
+      {
+        role: 'user',
+        content: `Improve this Norwegian article and return the HTML based on these instructions: ${instructions}`,
+      },
+    ],
+    model: 'gpt-3.5-turbo',
+  });
+
+  return modelRequest;
+}

@@ -27,6 +27,12 @@ export default function renderElements(json) {
     </React.Fragment>
   ));
 
+  // Ensure <head> is not a child of invalid elements
+  if (type.toLowerCase() === 'head' && !['html'].includes(json.parentType)) {
+    console.warn('<head> cannot be a child of <' + json.parentType + '>');
+    return null;
+  }
+
   if (type.toLowerCase() === 'html' || type.toLowerCase() === 'body') {
     return childrenElements;
   }

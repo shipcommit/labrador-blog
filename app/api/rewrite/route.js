@@ -3,8 +3,8 @@ import rewriteArticle from '@/utils/rewriteArticle';
 
 export async function POST(request) {
   try {
-    const { instructions } = await request.json();
-    const response = await rewriteArticle(instructions);
+    const { instructions, article } = await request.json();
+    const response = await rewriteArticle(instructions, article);
 
     console.log(response);
     return NextResponse.json(response);

@@ -39,7 +39,3 @@ export default function jsObjectToHtml(obj, indent = 0) {
 
   return result;
 }
-
-// Usage example:
-const htmlString = jsObjectToHtml(yourJsObject);
-console.log(htmlString);

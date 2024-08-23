@@ -1,15 +1,20 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import TextArea from './TextArea';
 import Button from './Button';
+import jsObjectToHtml from '@/utils/jsObjectToHtml';
+import content from '../../data/content';
 
 export default function Form() {
   const [instructions, setInstructions] = useState('');
   const [result, setResult] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(false);
 
   const handleSubmit = async (e) => {
+    console.log('jsObjectToHtml(content):', jsObjectToHtml(content));
+
     e.preventDefault();
     setIsLoading(true);
     try {
@@ -18,17 +23,30 @@ export default function Form() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ instructions }),
+        body: JSON.stringify({
+          instructions,
+          article: jsObjectToHtml(content),
+        }),
       });
 
+      console.log('response:', response);
+
       if (!response.ok) {
+        setError(true);
+
         throw new Error('Failed to rewrite article');
       }
+
+      //   if (response.error) {
+      //     setError(true);
+      //   }
 
       const data = await response.json();
       setResult(data.rewrittenArticle);
     } catch (error) {
+      setError(true);
       console.error('Error:', error);
+
       // Handle error (e.g., show error message to user)
     } finally {
       setIsLoading(false);
@@ -49,7 +67,16 @@ export default function Form() {
           disabled={isLoading}
         />
       </div>
+
       {result && <div dangerouslySetInnerHTML={{ __html: result }} />}
+      {/* {error && <p>Husk å forklar hvordan artikkelen skal omskrives</p>} */}
+      {useEffect(() => {
+        if (error) {
+          <p>Husk å forklar hvordan artikkelen skal omskrives</p>;
+        }
+
+        console.log('error:', error);
+      }, [error])}
     </form>
   );
 }

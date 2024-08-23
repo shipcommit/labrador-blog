@@ -6,7 +6,19 @@ export default function renderElements(json) {
   }
 
   const { type, attributes, children } = json;
-  const props = attributes || {};
+  const props = { ...attributes };
+
+  // Convert 'class' to 'className'
+  if (props.class) {
+    props.className = props.class;
+    delete props.class;
+  }
+
+  // Convert 'charset' to 'charSet'
+  if (props.charset) {
+    props.charSet = props.charset;
+    delete props.charset;
+  }
 
   // Use a more stable key based on the content
   const childrenElements = (children || []).map((child) => (

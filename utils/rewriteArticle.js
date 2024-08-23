@@ -38,7 +38,7 @@ export default async function rewriteArticle(instructions, article) {
 
     // return modelRequest.choices[0].message.content;
 
-    console.log('Improving article...');
+    console.log('Rewriting article...');
 
     const modelRequest = await client.messages.create({
       max_tokens: 2048,

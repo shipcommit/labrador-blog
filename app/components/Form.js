@@ -29,8 +29,6 @@ export default function Form() {
         }),
       });
 
-      console.log('response:', response);
-
       if (!response.ok) {
         setError(true);
 
@@ -42,6 +40,7 @@ export default function Form() {
       //   }
 
       const data = await response.json();
+      console.log('Rewritten article:', data);
       setResult(data.rewrittenArticle);
     } catch (error) {
       setError(true);

@@ -22,7 +22,7 @@ export default function Form() {
   return (
     <form onSubmit={handleSubmit} className="flex flex-col items-center w-full">
       <TextArea
-        prompt="Enter your text here..."
+        placeholder="Fortell hva som må forbedres med artikkelen..."
         value={text}
         onChange={handleTextChange}
       />

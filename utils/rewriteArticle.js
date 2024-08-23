@@ -7,6 +7,9 @@ const apiKey = process.env.OPENAI_API_KEY;
 const client = new OpenAI({ apiKey });
 
 export default async function rewriteArticle(instructions) {
+  if (instructions === undefined) {
+    throw 'Instructions are required';
+  }
   const modelRequest = await client.chat.completions.create({
     messages: [
       {

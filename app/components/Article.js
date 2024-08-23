@@ -2,6 +2,6 @@
 
 import renderElements from '@/utils/renderElements';
 
-export default function Article({ jsonData }) {
-  return <article className="prose">{renderElements(jsonData)}</article>;
+export default function Article({ data }) {
+  return <article className="prose">{renderElements(data)}</article>;
 }

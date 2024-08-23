@@ -7,7 +7,7 @@ export default function Home() {
     <div className="flex flex-col items-center py-8">
       <Form />
       <div className="mt-4">
-        <Article jsonData={content} />
+        <Article data={content} />
       </div>
     </div>
   );

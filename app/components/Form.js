@@ -6,7 +6,7 @@ import Button from './Button';
 import jsObjectToHtml from '@/utils/jsObjectToHtml';
 import content from '../../data/content';
 
-export default function Form() {
+export default function Form({ onSubmit }) {
   const [instructions, setInstructions] = useState('');
   const [result, setResult] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -30,23 +30,15 @@ export default function Form() {
       });
 
       if (!response.ok) {
-        setError(true);
-
         throw new Error('Failed to rewrite article');
       }
 
-      //   if (response.error) {
-      //     setError(true);
-      //   }
-
       const data = await response.json();
       console.log('Rewritten article:', data);
-      setResult(data.rewrittenArticle);
+      onSubmit(data); // Call the onSubmit prop with the form data
     } catch (error) {
       setError(true);
       console.error('Error:', error);
-
-      // Handle error (e.g., show error message to user)
     } finally {
       setIsLoading(false);
     }
@@ -67,15 +59,7 @@ export default function Form() {
         />
       </div>
 
-      {result && <div dangerouslySetInnerHTML={{ __html: result }} />}
-      {/* {error && <p>Husk å forklar hvordan artikkelen skal omskrives</p>} */}
-      {/* {useEffect(() => {
-        if (error) {
-          <p>Husk å forklar hvordan artikkelen skal omskrives</p>;
-        }
-
-        console.log('error:', error);
-      }, [error])} */}
+      {error && <p>Husk å forklar hvordan artikkelen skal omskrives</p>}
     </form>
   );
 }

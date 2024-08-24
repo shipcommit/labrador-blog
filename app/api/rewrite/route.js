@@ -6,7 +6,7 @@ export async function POST(request) {
     const { instructions, article } = await request.json();
     const response = await rewriteArticle(instructions, article);
 
-    console.log(response);
+    console.log('response:', response);
     return NextResponse.json(response);
   } catch (error) {
     console.error('Error in rewrite API:', error);

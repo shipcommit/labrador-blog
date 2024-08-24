@@ -8,11 +8,6 @@ export async function POST(request) {
 
     console.log(response);
     return NextResponse.json(response);
-    // const jsonResponse = new Response(JSON.stringify(response), {
-    //   headers: { 'Content-Type': 'application/json' },
-    // });
-
-    // return jsonResponse;
   } catch (error) {
     console.error('Error in rewrite API:', error);
     return NextResponse.json(

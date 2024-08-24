@@ -57,7 +57,7 @@ export default async function rewriteArticle(instructions, article) {
               ${article}`,
         },
       ],
-      model: 'claude-3-opus-20240229',
+      model: 'claude-3-5-sonnet-20240620',
     });
 
     return modelRequest.content[0].text;

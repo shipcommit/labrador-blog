@@ -69,13 +69,13 @@ export default function Form() {
 
       {result && <div dangerouslySetInnerHTML={{ __html: result }} />}
       {/* {error && <p>Husk å forklar hvordan artikkelen skal omskrives</p>} */}
-      {useEffect(() => {
+      {/* {useEffect(() => {
         if (error) {
           <p>Husk å forklar hvordan artikkelen skal omskrives</p>;
         }
 
         console.log('error:', error);
-      }, [error])}
+      }, [error])} */}
     </form>
   );
 }

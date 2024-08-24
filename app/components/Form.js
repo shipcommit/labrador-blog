@@ -10,7 +10,6 @@ export default function Form({ onSubmit }) {
   const [instructions, setInstructions] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(false);
-  const [rewriting, setRewriting] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -23,9 +22,6 @@ export default function Form({ onSubmit }) {
       } else {
         setError(false);
       }
-
-      // Set rewriting state to true
-      setRewriting(true);
 
       // Make request
       const response = await fetch('/api/rewrite', {
@@ -46,9 +42,6 @@ export default function Form({ onSubmit }) {
       const data = await response.json();
       console.log('Rewritten article:', data);
       onSubmit(data);
-
-      // Set rewriting state to false
-      setRewriting(false);
     } catch (error) {
       setError(true);
       console.error('Error:', error);
@@ -60,7 +53,7 @@ export default function Form({ onSubmit }) {
   return (
     <form onSubmit={handleSubmit} className="flex flex-col items-center w-full">
       <TextArea
-        disabled={rewriting}
+        disabled={isLoading}
         placeholder="Fortell hva som må forbedres med artikkelen..."
         value={instructions}
         onChange={(e) => setInstructions(e.target.value)}

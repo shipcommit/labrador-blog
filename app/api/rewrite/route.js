@@ -1,6 +1,8 @@
 import { NextResponse } from 'next/server';
 import rewriteArticle from '@/utils/rewriteArticle';
 
+export const maxDuration = 60;
+
 export async function POST(request) {
   try {
     const { instructions, article } = await request.json();

@@ -18,7 +18,7 @@ export default function Form({ onSubmit }) {
       // Check if instructions are provided
       if (!instructions) {
         setError(true);
-        return { error: true };
+        return;
       } else {
         setError(false);
       }
